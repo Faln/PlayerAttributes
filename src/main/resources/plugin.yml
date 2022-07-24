@@ -1,0 +1,5 @@
+name: PlayerAttributes
+version: '${project.version}'
+main: me.faln.playerattributes.PlayerAttributes
+api-version: 1.19
+authors: [ Faln ]
