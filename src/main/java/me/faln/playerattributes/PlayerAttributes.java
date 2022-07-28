@@ -4,30 +4,40 @@ import co.aikar.commands.BukkitCommandManager;
 import lombok.Getter;
 import me.faln.playerattributes.cache.UserCache;
 import me.faln.playerattributes.commands.AddCmds;
+import me.faln.playerattributes.config.files.registry.FilesRegistry;
 import me.faln.playerattributes.listeners.JoinListener;
+import me.faln.playerattributes.listeners.PlayerAttackListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
 public final class PlayerAttributes extends JavaPlugin {
 
-    private UserCache userCache;
+    private FilesRegistry files;
 
+    private UserCache userCache;
     private BukkitCommandManager commandManager;
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        this.reload();
+    }
+
+    public void reload() {
+        this.files = new FilesRegistry(this);
         this.userCache = new UserCache(this);
         this.commandManager = new BukkitCommandManager(this);
         this.commandManager.registerCommand(new AddCmds(this));
 
         new JoinListener(this);
-
-
+        new PlayerAttackListener(this);
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        this.userCache.save();
+    }
+
+    public void log(String message) {
+        this.getLogger().info(Utils.colorize(message));
     }
 }

@@ -24,7 +24,10 @@ public class JoinListener implements Listener {
         final Player player = event.getPlayer();
         final UUID id = player.getUniqueId();
 
+        if (plugin.getUserCache().contains(id)) return;
+
         this.plugin.getUserCache().add(id, new User(id, BigInteger.ONE).applyDefault());
+        this.plugin.getUserCache().saveUser(this.plugin.getUserCache().get(player));
 
     }
 

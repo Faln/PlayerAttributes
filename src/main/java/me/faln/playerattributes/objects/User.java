@@ -18,7 +18,6 @@ public class User {
     private final UUID id;
 
     private BigInteger level;
-
     private DamageAttribute damage;
     private DefenseAttribute defense;
     private ResistanceAttribute resistance;
@@ -26,6 +25,7 @@ public class User {
     public User(final UUID id, final BigInteger level) {
         this.id = id;
         this.level = level;
+        this.applyDefault();
     }
 
     public User applyDefault() {
@@ -33,6 +33,21 @@ public class User {
         this.damage = new DamageAttribute(BigDecimal.ONE);
         this.defense = new DefenseAttribute(BigDecimal.ONE);
         this.resistance = new ResistanceAttribute(BigDecimal.ONE);
+        return this;
+    }
+
+    public User setDamage(final BigDecimal damage) {
+        this.damage.set(damage);
+        return this;
+    }
+
+    public User setDefense(final BigDecimal defense) {
+        this.defense.set(defense);
+        return this;
+    }
+
+    public User setResistance(final BigDecimal resistance) {
+        this.resistance.set(resistance);
         return this;
     }
 

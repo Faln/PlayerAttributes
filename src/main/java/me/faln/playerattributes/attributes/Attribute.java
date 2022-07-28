@@ -6,10 +6,6 @@ public abstract class Attribute implements ProgressiveData {
 
     protected BigDecimal value = BigDecimal.ONE;
 
-    public BigDecimal get() {
-        return this.value;
-    }
-
     @Override
     public void increment(BigDecimal amount) {
         this.value = this.value.add(amount);
@@ -18,6 +14,14 @@ public abstract class Attribute implements ProgressiveData {
     @Override
     public void incrementSingle() {
         this.value = this.value.add(BigDecimal.ONE);
+    }
+
+    public void set(final BigDecimal value) {
+        this.value = value;
+    }
+
+    public BigDecimal get() {
+        return this.value;
     }
 
 }
