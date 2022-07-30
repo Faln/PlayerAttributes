@@ -2,9 +2,12 @@ package me.faln.playerattributes;
 
 import co.aikar.commands.BukkitCommandManager;
 import lombok.Getter;
+import me.faln.playerattributes.cache.LevelCache;
 import me.faln.playerattributes.cache.UserCache;
 import me.faln.playerattributes.commands.AddCmds;
+import me.faln.playerattributes.commands.AttributeCmds;
 import me.faln.playerattributes.config.files.registry.FilesRegistry;
+import me.faln.playerattributes.hooks.PlaceholderAPIHook;
 import me.faln.playerattributes.listeners.JoinListener;
 import me.faln.playerattributes.listeners.PlayerAttackListener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +18,7 @@ public final class PlayerAttributes extends JavaPlugin {
     private FilesRegistry files;
 
     private UserCache userCache;
+    private LevelCache levelCache;
     private BukkitCommandManager commandManager;
 
     @Override
@@ -25,8 +29,14 @@ public final class PlayerAttributes extends JavaPlugin {
     public void reload() {
         this.files = new FilesRegistry(this);
         this.userCache = new UserCache(this);
+        this.levelCache = new LevelCache(this);
         this.commandManager = new BukkitCommandManager(this);
         this.commandManager.registerCommand(new AddCmds(this));
+        this.commandManager.registerCommand(new AttributeCmds(this));
+
+        if (this.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PlaceholderAPIHook(this);
+        }
 
         new JoinListener(this);
         new PlayerAttackListener(this);

@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 
 public class PlayerAttackListener implements Listener {
@@ -19,7 +20,7 @@ public class PlayerAttackListener implements Listener {
 
     public PlayerAttackListener(final PlayerAttributes plugin) {
         this.plugin = plugin;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
@@ -37,14 +38,16 @@ public class PlayerAttackListener implements Listener {
 
         if (event.getEntity() instanceof Player) {
             victim = this.plugin.getUserCache().get((Player) event.getEntity());
-            damage = BigDecimal.valueOf(user.get(AttributeType.DAMAGE).doubleValue() * (100/(100 + victim.get(AttributeType.DEFENSE).doubleValue())));
+            damage = user.get(AttributeType.DAMAGE).multiply(BigDecimal.valueOf(100).divide(victim.get(AttributeType.DEFENSE).add(BigDecimal.valueOf(100)), RoundingMode.UNNECESSARY));
         } else {
             damage = user.get(AttributeType.DAMAGE);
         }
 
+        final String entityHealth = entity.getHealth() - damage.longValueExact() <= 0 ? "0" : Utils.decimalFormat(entity.getHealth() - damage.longValueExact());
+
         event.setDamage(damage.longValueExact());
         Utils.send(player, Collections.singletonList(
-                "&c&l[!] &cYou have dealt " + Utils.decimalFormat(damage.longValueExact()) + " to " + entity.getName() + ". &7[Target Health: " + Utils.decimalFormat(entity.getHealth() - damage.longValueExact()) + "]"));
+                "&c&l[!] &cYou have dealt " + Utils.decimalFormat(damage.longValueExact()) + " damage to " + entity.getName() + ". &7[Target Health: " + entityHealth + "]"));
     }
 
 }

@@ -9,7 +9,6 @@ import me.faln.playerattributes.attributes.types.ResistanceAttribute;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.UUID;
 
 @Getter @Setter
@@ -17,19 +16,19 @@ public class User {
 
     private final UUID id;
 
-    private BigInteger level;
+    private int level;
     private DamageAttribute damage;
     private DefenseAttribute defense;
     private ResistanceAttribute resistance;
 
-    public User(final UUID id, final BigInteger level) {
+    public User(final UUID id, final int level) {
         this.id = id;
         this.level = level;
         this.applyDefault();
     }
 
     public User applyDefault() {
-        this.level = BigInteger.ONE;
+        this.level = 1;
         this.damage = new DamageAttribute(BigDecimal.ONE);
         this.defense = new DefenseAttribute(BigDecimal.ONE);
         this.resistance = new ResistanceAttribute(BigDecimal.ONE);
@@ -82,10 +81,10 @@ public class User {
     @Override
     public String toString() {
         return "[" + id.toString() + "] " +
-                "Level: " + level + ", " +
-                "Damage: " + damage + ", " +
-                "Defense: " + defense + ", " +
-                "Resistance: " + resistance + ".";
+                "{Level: " + level + "}, " +
+                "{Damage: " + damage + "}, " +
+                "{Defense: " + defense + "}, " +
+                "{Resistance: " + resistance + "}.";
     }
 
 

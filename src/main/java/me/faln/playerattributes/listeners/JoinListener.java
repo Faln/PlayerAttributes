@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.math.BigInteger;
 import java.util.UUID;
 
 public class JoinListener implements Listener {
@@ -16,7 +15,7 @@ public class JoinListener implements Listener {
 
     public JoinListener(final PlayerAttributes plugin) {
         this.plugin = plugin;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
@@ -26,7 +25,7 @@ public class JoinListener implements Listener {
 
         if (plugin.getUserCache().contains(id)) return;
 
-        this.plugin.getUserCache().add(id, new User(id, BigInteger.ONE).applyDefault());
+        this.plugin.getUserCache().add(id, new User(id, 1).applyDefault());
         this.plugin.getUserCache().saveUser(this.plugin.getUserCache().get(player));
 
     }

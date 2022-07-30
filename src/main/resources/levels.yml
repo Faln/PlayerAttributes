@@ -1,0 +1,34 @@
+1:
+  required-exp: 0
+  permission: 'level.1'
+  attribute-cap:
+    damage: 5
+    defense: 5
+    resistance: 2
+  rewards: []
+2:
+  required-exp: 10
+  permission: 'level.2'
+  attribute-cap:
+    damage: 7.5
+    defense: 7.5
+    resistance: 4
+  rewards:
+    '1':
+      type: item
+      name: '&7Rusty Sword'
+      data: 0
+      lore:
+        - '&7An old rusty blade'
+    '2':
+      type: command
+      command: 'attributes add damage 1 %player%'
+3:
+  required-exp: 50
+  permission: 'level.3'
+  attribute-cap:
+    damage: 10
+    defense: 10
+    resistance: 6
+  rewards: []
+

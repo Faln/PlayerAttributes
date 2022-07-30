@@ -1,19 +1,17 @@
 package me.faln.playerattributes.cache;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.faln.playerattributes.PlayerAttributes;
-import me.faln.playerattributes.attributes.AttributeType;
 import me.faln.playerattributes.config.files.YMLConfig;
 import me.faln.playerattributes.objects.User;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,7 +56,7 @@ public class UserCache {
             if (section == null) return;
 
             final UUID id = UUID.fromString(fileName);
-            final BigInteger level = BigInteger.valueOf(section.getLong("level"));
+            final int level = section.getInt("level");
             final BigDecimal damage = BigDecimal.valueOf(section.getLong("damage"));
             final BigDecimal defense = BigDecimal.valueOf(section.getLong("defense"));
             final BigDecimal resistance = BigDecimal.valueOf(section.getLong("resistance"));
@@ -73,7 +71,7 @@ public class UserCache {
         }
     }
 
-    public void saveUser(final User user) {
+    public synchronized void saveUser(final User user) {
 
         if (!this.users.containsKey(user.getId())) return;
 
@@ -81,21 +79,23 @@ public class UserCache {
         final File file = new File(plugin.getDataFolder() + File.separator + "users" + File.separator + id + ".yml");
         final YMLConfig config = new YMLConfig(file, YamlConfiguration.loadConfiguration(file));
 
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            config.getConfig().set("uuid", id);
-            config.getConfig().set("level", user.getLevel().intValue());
-            config.getConfig().set("damage", user.getDamage().get().longValue());
-            config.getConfig().set("defense", user.getDefense().get().longValue());
-            config.getConfig().set("resistance", user.getResistance().get().longValue());
-            config.save();
-        });
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                config.getConfig().set("uuid", id);
+                config.getConfig().set("level", user.getLevel());
+                config.getConfig().set("damage", user.getDamage().get().longValue());
+                config.getConfig().set("defense", user.getDefense().get().longValue());
+                config.getConfig().set("resistance", user.getResistance().get().longValue());
+                config.save();
+            }
+        }.runTask(plugin);
 
     }
 
     public void save() {
-        for (final User user : this.users.values()) {
-            this.saveUser(user);
-        }
+        if (this.users.isEmpty()) return;
+        this.users.values().forEach(this::saveUser);
     }
 
     public User get(final Player player) {
