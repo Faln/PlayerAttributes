@@ -25,7 +25,6 @@ public class User {
     public User(final UUID id, final int level) {
         this.id = id;
         this.level = level;
-        this.applyDefault();
     }
 
     public User applyDefault() {
