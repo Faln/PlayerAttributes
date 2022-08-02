@@ -1,4 +1,4 @@
-package me.faln.playerattributes.objects;
+package me.faln.playerattributes.objects.user;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -3,11 +3,10 @@ package me.faln.playerattributes.cache;
 import lombok.Getter;
 import me.faln.playerattributes.PlayerAttributes;
 import me.faln.playerattributes.config.files.YMLConfig;
-import me.faln.playerattributes.objects.User;
+import me.faln.playerattributes.objects.user.User;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +56,7 @@ public class UserCache {
 
             final UUID id = UUID.fromString(fileName);
             final int level = section.getInt("level");
+            final int points = section.getInt("points");
             final BigDecimal damage = BigDecimal.valueOf(section.getLong("damage"));
             final BigDecimal defense = BigDecimal.valueOf(section.getLong("defense"));
             final BigDecimal resistance = BigDecimal.valueOf(section.getLong("resistance"));
@@ -64,14 +64,15 @@ public class UserCache {
             this.add(id, new User(id, level)
                     .setDamage(damage)
                     .setDefense(defense)
-                    .setResistance(resistance));
+                    .setResistance(resistance)
+                    .setPoints(points));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public synchronized void saveUser(final User user) {
+    public void saveUser(final User user) {
 
         if (!this.users.containsKey(user.getId())) return;
 
@@ -79,17 +80,13 @@ public class UserCache {
         final File file = new File(plugin.getDataFolder() + File.separator + "users" + File.separator + id + ".yml");
         final YMLConfig config = new YMLConfig(file, YamlConfiguration.loadConfiguration(file));
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                config.getConfig().set("uuid", id);
-                config.getConfig().set("level", user.getLevel());
-                config.getConfig().set("damage", user.getDamage().get().longValue());
-                config.getConfig().set("defense", user.getDefense().get().longValue());
-                config.getConfig().set("resistance", user.getResistance().get().longValue());
-                config.save();
-            }
-        }.runTask(plugin);
+        config.getConfig().set("uuid", id);
+        config.getConfig().set("level", user.getLevel());
+        config.getConfig().set("points", user.getPoints());
+        config.getConfig().set("damage", user.getDamage().get().longValue());
+        config.getConfig().set("defense", user.getDefense().get().longValue());
+        config.getConfig().set("resistance", user.getResistance().get().longValue());
+        config.save();
 
     }
 

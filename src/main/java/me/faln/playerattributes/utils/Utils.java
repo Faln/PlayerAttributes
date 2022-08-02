@@ -1,4 +1,4 @@
-package me.faln.playerattributes;
+package me.faln.playerattributes.utils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

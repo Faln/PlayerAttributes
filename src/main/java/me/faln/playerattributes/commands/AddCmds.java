@@ -6,7 +6,7 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import me.faln.playerattributes.PlayerAttributes;
-import me.faln.playerattributes.Utils;
+import me.faln.playerattributes.utils.Utils;
 import me.faln.playerattributes.attributes.AttributeType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

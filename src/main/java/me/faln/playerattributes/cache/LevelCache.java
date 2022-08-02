@@ -5,7 +5,8 @@ import me.faln.playerattributes.PlayerAttributes;
 import me.faln.playerattributes.objects.rewards.CommandReward;
 import me.faln.playerattributes.objects.rewards.ItemReward;
 import me.faln.playerattributes.objects.rewards.Reward;
-import me.faln.playerattributes.objects.UserLevel;
+import me.faln.playerattributes.objects.user.UserLevel;
+import me.faln.playerattributes.utils.Item;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.IOException;
@@ -62,10 +63,12 @@ public class LevelCache {
             final String type = section.getString(key + ".type", "");
             switch (type) {
                 case "item":
-                    rewardList.add(new ItemReward());
+                    final ConfigurationSection itemSection = section.getConfigurationSection(key);
+                    if (itemSection == null) break;
+                    rewardList.add(new ItemReward(new Item(itemSection).build()));
                     break;
                 case "command":
-                    rewardList.add(new CommandReward());
+                    rewardList.add(new CommandReward(section.getString(key + ".command")));
                     break;
                 default:
                     break;

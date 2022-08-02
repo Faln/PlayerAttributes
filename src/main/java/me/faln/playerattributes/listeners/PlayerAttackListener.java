@@ -1,9 +1,9 @@
 package me.faln.playerattributes.listeners;
 
 import me.faln.playerattributes.PlayerAttributes;
-import me.faln.playerattributes.Utils;
+import me.faln.playerattributes.utils.Utils;
 import me.faln.playerattributes.attributes.AttributeType;
-import me.faln.playerattributes.objects.User;
+import me.faln.playerattributes.objects.user.User;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

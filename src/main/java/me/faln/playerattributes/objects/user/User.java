@@ -1,4 +1,4 @@
-package me.faln.playerattributes.objects;
+package me.faln.playerattributes.objects.user;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +17,7 @@ public class User {
     private final UUID id;
 
     private int level;
+    private int points;
     private DamageAttribute damage;
     private DefenseAttribute defense;
     private ResistanceAttribute resistance;
@@ -29,6 +30,7 @@ public class User {
 
     public User applyDefault() {
         this.level = 1;
+        this.points = 0;
         this.damage = new DamageAttribute(BigDecimal.ONE);
         this.defense = new DefenseAttribute(BigDecimal.ONE);
         this.resistance = new ResistanceAttribute(BigDecimal.ONE);
@@ -47,6 +49,11 @@ public class User {
 
     public User setResistance(final BigDecimal resistance) {
         this.resistance.set(resistance);
+        return this;
+    }
+
+    public User setPoints(final int points) {
+        this.points = points;
         return this;
     }
 

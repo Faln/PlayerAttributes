@@ -2,7 +2,7 @@ package me.faln.playerattributes.hooks;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.faln.playerattributes.PlayerAttributes;
-import me.faln.playerattributes.objects.User;
+import me.faln.playerattributes.objects.user.User;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,14 +15,16 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
     }
 
     @Override
-    public String onRequest(final OfflinePlayer player, final String placeholder) {
+    public String onRequest(final OfflinePlayer player, final @NotNull String placeholder) {
         if (player == null || !plugin.getUserCache().contains(player.getUniqueId())) return "???";
 
         final User user = plugin.getUserCache().get(player.getUniqueId());
 
         switch (placeholder) {
             case "level":
-                return user.getLevel().toString();
+                return user.getLevel() + "";
+            case "points":
+                return user.getPoints() + "";
             case "damage":
                 return user.getDamage().toString();
             case "defense":

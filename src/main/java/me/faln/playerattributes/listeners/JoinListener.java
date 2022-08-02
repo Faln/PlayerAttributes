@@ -1,7 +1,8 @@
 package me.faln.playerattributes.listeners;
 
 import me.faln.playerattributes.PlayerAttributes;
-import me.faln.playerattributes.objects.User;
+import me.faln.playerattributes.objects.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +27,8 @@ public class JoinListener implements Listener {
         if (plugin.getUserCache().contains(id)) return;
 
         this.plugin.getUserCache().add(id, new User(id, 1).applyDefault());
-        this.plugin.getUserCache().saveUser(this.plugin.getUserCache().get(player));
+
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> this.plugin.getUserCache().saveUser(this.plugin.getUserCache().get(player)));
 
     }
 

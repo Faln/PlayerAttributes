@@ -10,6 +10,7 @@ import me.faln.playerattributes.config.files.registry.FilesRegistry;
 import me.faln.playerattributes.hooks.PlaceholderAPIHook;
 import me.faln.playerattributes.listeners.JoinListener;
 import me.faln.playerattributes.listeners.PlayerAttackListener;
+import me.faln.playerattributes.utils.Utils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
