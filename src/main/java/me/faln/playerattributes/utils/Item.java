@@ -87,6 +87,10 @@ public class Item {
         return meta.hasLore() ? meta.getLore() : null;
     }
 
+    public String getName() {
+        return this.meta.getDisplayName();
+    }
+
     public Item addFlag(ItemFlag flag) {
         meta.addItemFlags(flag);
         return this;

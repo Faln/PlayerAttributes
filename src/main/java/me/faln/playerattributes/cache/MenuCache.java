@@ -2,7 +2,7 @@ package me.faln.playerattributes.cache;
 
 import lombok.Getter;
 import me.faln.playerattributes.PlayerAttributes;
-import me.faln.playerattributes.menus.Menu;
+import me.faln.playerattributes.menus.base.Menu;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,4 +17,17 @@ public class MenuCache {
     public MenuCache(final PlayerAttributes plugin) {
         this.plugin = plugin;
     }
+
+    public void add(final String name, final Menu menu) {
+        this.menus.put(name, menu);
+    }
+
+    public void remove(final String name) {
+        this.menus.remove(name);
+    }
+
+    public Menu get(final String name) {
+        return this.menus.get(name);
+    }
+
 }

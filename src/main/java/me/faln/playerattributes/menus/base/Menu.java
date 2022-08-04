@@ -1,4 +1,4 @@
-package me.faln.playerattributes.menus;
+package me.faln.playerattributes.menus.base;
 
 import de.themoep.inventorygui.GuiElement;
 import de.themoep.inventorygui.InventoryGui;
@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 public interface Menu {
+
+    MenuImpl getImpl();
 
     InventoryGui getMenu();
 
@@ -40,4 +42,5 @@ public interface Menu {
     default void show(final Player player) {
         this.getMenu().show(player);
     }
+
 }

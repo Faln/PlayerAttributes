@@ -3,6 +3,7 @@ package me.faln.playerattributes;
 import co.aikar.commands.BukkitCommandManager;
 import lombok.Getter;
 import me.faln.playerattributes.cache.LevelCache;
+import me.faln.playerattributes.cache.MenuCache;
 import me.faln.playerattributes.cache.UserCache;
 import me.faln.playerattributes.commands.AddCmds;
 import me.faln.playerattributes.commands.AttributeCmds;
@@ -20,6 +21,7 @@ public final class PlayerAttributes extends JavaPlugin {
 
     private UserCache userCache;
     private LevelCache levelCache;
+    private MenuCache menuCache;
     private BukkitCommandManager commandManager;
 
     @Override
@@ -31,6 +33,7 @@ public final class PlayerAttributes extends JavaPlugin {
         this.files = new FilesRegistry(this);
         this.userCache = new UserCache(this);
         this.levelCache = new LevelCache(this);
+        this.menuCache = new MenuCache(this);
         this.commandManager = new BukkitCommandManager(this);
         this.commandManager.registerCommand(new AddCmds(this));
         this.commandManager.registerCommand(new AttributeCmds(this));
