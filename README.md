@@ -1,1 +1,1 @@
-An RPG style rework to Minecrafts vanilla damange system.
+An RPG style rework to Minecrafts vanilla damage system.
