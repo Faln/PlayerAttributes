@@ -2,6 +2,7 @@ package me.faln.playerattributes.cache;
 
 import lombok.Getter;
 import me.faln.playerattributes.PlayerAttributes;
+import me.faln.playerattributes.menus.LevelsMenu;
 import me.faln.playerattributes.menus.base.Menu;
 
 import java.util.HashMap;
@@ -16,6 +17,12 @@ public class MenuCache {
 
     public MenuCache(final PlayerAttributes plugin) {
         this.plugin = plugin;
+        this.cache();
+    }
+
+    private void cache() {
+        this.menus.clear();
+        this.add("levels", new LevelsMenu(plugin.getFiles().getFile("levels-menu").section(""), plugin));
     }
 
     public void add(final String name, final Menu menu) {

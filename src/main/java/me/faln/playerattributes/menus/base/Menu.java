@@ -11,7 +11,7 @@ import java.util.Collection;
 
 public interface Menu {
 
-    MenuImpl getImpl();
+    SimpleMenu getImpl();
 
     InventoryGui getMenu();
 

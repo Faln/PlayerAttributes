@@ -60,12 +60,15 @@ public class UserCache {
             final BigDecimal damage = BigDecimal.valueOf(section.getLong("damage"));
             final BigDecimal defense = BigDecimal.valueOf(section.getLong("defense"));
             final BigDecimal resistance = BigDecimal.valueOf(section.getLong("resistance"));
+            final BigDecimal currentExp = BigDecimal.valueOf(section.getLong("current-exp"));
 
-            this.add(id, new User(id, level)
+            this.add(id, new User(plugin, id)
+                    .setLevel(level)
                     .setDamage(damage)
                     .setDefense(defense)
                     .setResistance(resistance)
-                    .setPoints(points));
+                    .setPoints(points)
+                    .setCurrentExp(currentExp));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,6 +89,7 @@ public class UserCache {
         config.getConfig().set("damage", user.getDamage().get().longValue());
         config.getConfig().set("defense", user.getDefense().get().longValue());
         config.getConfig().set("resistance", user.getResistance().get().longValue());
+        config.getConfig().set("current-exp", user.getCurrentExp().longValue());
         config.save();
 
     }

@@ -7,10 +7,7 @@ import java.math.BigDecimal;
 public class DamageAttribute extends Attribute {
 
     public DamageAttribute() {
-    }
-
-    public DamageAttribute(BigDecimal amount) {
-        super.value = amount;
+        this.value = BigDecimal.ONE;
     }
 
 }

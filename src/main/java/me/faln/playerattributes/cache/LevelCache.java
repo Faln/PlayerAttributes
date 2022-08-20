@@ -9,7 +9,6 @@ import me.faln.playerattributes.objects.user.UserLevel;
 import me.faln.playerattributes.utils.Item;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -22,14 +21,10 @@ public class LevelCache {
 
     public LevelCache(final PlayerAttributes plugin) {
         this.plugin = plugin;
-        try {
-            this.cache();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.cache();
     }
 
-    private void cache() throws IOException {
+    private void cache() {
 
         this.levels.clear();
 
@@ -46,7 +41,7 @@ public class LevelCache {
             final List<Reward> rewardList = this.parseRewards(section.getConfigurationSection(id + ".rewards"));
 
             this.levels.add(Integer.parseInt(id) - 1, new UserLevel(Integer.parseInt(id), requiredExp, permission)
-                    .setDefenseCap(damageCap)
+                    .setDamageCap(damageCap)
                     .setDefenseCap(defenseCap)
                     .setResistanceCap(resistanceCap)
                     .setRewards(rewardList));
@@ -78,5 +73,16 @@ public class LevelCache {
         return rewardList;
     }
 
+    public UserLevel get(final int level) {
+        return this.levels.get(level);
+    }
+
+    public int getMax() {
+        return this.levels.size() - 1;
+    }
+
+    public UserLevel getMaxLevel() {
+        return this.levels.get(this.getMax());
+    }
 
 }

@@ -14,8 +14,8 @@ public enum AttributeType {
 
     private final Attribute attribute;
 
-    AttributeType(Supplier<? extends Attribute> clazz) {
-        this.attribute = clazz.get();
+    AttributeType(Supplier<? extends Attribute> attribute) {
+        this.attribute = attribute.get();
     }
 
     public Attribute get() {

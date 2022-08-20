@@ -4,7 +4,7 @@ import de.themoep.inventorygui.DynamicGuiElement;
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
 import me.faln.playerattributes.PlayerAttributes;
-import me.faln.playerattributes.menus.base.MenuImpl;
+import me.faln.playerattributes.menus.base.SimpleMenu;
 import me.faln.playerattributes.objects.user.User;
 import me.faln.playerattributes.objects.user.UserLevel;
 import me.faln.playerattributes.utils.Item;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.stream.Collectors;
 
-public class LevelsMenu extends MenuImpl {
+public class LevelsMenu extends SimpleMenu {
 
     private final PlayerAttributes plugin;
 
@@ -21,13 +21,11 @@ public class LevelsMenu extends MenuImpl {
     private Item locked;
     private Item info;
 
-
     public LevelsMenu(final ConfigurationSection section, final PlayerAttributes plugin) {
         super(section, plugin);
 
         this.plugin = plugin;
         this.cacheItems(section);
-        this.register("levels", this);
     }
 
     private void cacheItems(final ConfigurationSection section) {
@@ -48,7 +46,7 @@ public class LevelsMenu extends MenuImpl {
     @Override
     public void buildFor(final Player player) {
         final User user = this.plugin.getUserCache().get(player);
-
+        this.getMenu().show(player);
     }
 
     @Override

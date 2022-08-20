@@ -7,9 +7,7 @@ import java.math.BigDecimal;
 public class ResistanceAttribute extends Attribute {
 
     public ResistanceAttribute() {
+        this.value = BigDecimal.ONE;
     }
 
-    public ResistanceAttribute(BigDecimal amount) {
-        super.value = amount;
-    }
 }

@@ -2,10 +2,13 @@ package me.faln.playerattributes.objects.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.faln.playerattributes.PlayerAttributes;
 import me.faln.playerattributes.attributes.AttributeType;
 import me.faln.playerattributes.attributes.types.DamageAttribute;
 import me.faln.playerattributes.attributes.types.DefenseAttribute;
 import me.faln.playerattributes.attributes.types.ResistanceAttribute;
+import me.faln.playerattributes.events.UserLevelEvent;
+import org.bukkit.Bukkit;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
@@ -14,25 +17,61 @@ import java.util.UUID;
 @Getter @Setter
 public class User {
 
+    private final PlayerAttributes plugin;
     private final UUID id;
 
-    private int level;
+    private UserLevel level;
+    private BigDecimal currentExp;
     private int points;
     private DamageAttribute damage;
     private DefenseAttribute defense;
     private ResistanceAttribute resistance;
 
-    public User(final UUID id, final int level) {
+    public User(final PlayerAttributes plugin, final UUID id) {
+        this.plugin = plugin;
         this.id = id;
-        this.level = level;
     }
 
     public User applyDefault() {
-        this.level = 1;
+        this.level = plugin.getLevelCache().get(0);
         this.points = 0;
-        this.damage = new DamageAttribute(BigDecimal.ONE);
-        this.defense = new DefenseAttribute(BigDecimal.ONE);
-        this.resistance = new ResistanceAttribute(BigDecimal.ONE);
+        this.currentExp = BigDecimal.ZERO;
+        this.damage = new DamageAttribute();
+        this.defense = new DefenseAttribute();
+        this.resistance = new ResistanceAttribute();
+        return this;
+    }
+
+    public User addExp(final BigDecimal amount) {
+
+        final long total = this.currentExp.add(amount).longValueExact();
+
+        if (this.level.getRequiredExp().longValueExact() <= total) {
+
+            if (this.isMaxLevel()) {
+                this.setCurrentExp(BigDecimal.ZERO);
+                this.level = this.plugin.getLevelCache().getMaxLevel();
+                return this;
+            }
+
+            final long extra = total - this.level.getRequiredExp().longValueExact();
+
+            this.setCurrentExp(extra == 0.0 ? BigDecimal.ZERO : BigDecimal.valueOf(extra));
+            this.level = this.plugin.getLevelCache().get(this.level.getId() + 1);
+
+        }
+
+        this.currentExp = this.currentExp.add(amount);
+        return this;
+    }
+
+    public User setCurrentExp(final BigDecimal amount) {
+        this.currentExp = amount;
+        return this;
+    }
+
+    public User setLevel(final int level) {
+        this.level = this.plugin.getLevelCache().get(level);
         return this;
     }
 
@@ -58,7 +97,7 @@ public class User {
 
     public void increment(final AttributeType type, @Nullable BigDecimal amount) {
         final BigDecimal num = amount == null ? BigDecimal.ONE : amount;
-        switch(type) {
+        switch (type) {
             case DAMAGE:
                 this.damage.increment(num);
                 break;
@@ -82,6 +121,10 @@ public class User {
             default:
                 return BigDecimal.ONE;
         }
+    }
+
+    public boolean isMaxLevel() {
+        return this.level.getId() + 1 > this.plugin.getLevelCache().getMax();
     }
 
     @Override

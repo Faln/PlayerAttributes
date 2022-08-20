@@ -7,10 +7,7 @@ import java.math.BigDecimal;
 public class DefenseAttribute extends Attribute {
 
     public DefenseAttribute() {
-    }
-
-    public DefenseAttribute(BigDecimal amount) {
-        super.value = amount;
+        this.value = BigDecimal.ONE;
     }
 
 }

@@ -24,8 +24,8 @@ public class FilesRegistry {
     }
 
     private void createFiles() {
-        for (String fileName : new String[] {"config", "levels", "levels-menu", "lang"}) {
-            YMLConfig ymlConfig = configFactory.createConfig(main.getDataFolder(), fileName);
+        for (final String fileName : new String[] {"config", "levels", "levels-menu", "lang"}) {
+            final YMLConfig ymlConfig = configFactory.createConfig(main.getDataFolder(), fileName);
             this.filesMap.put(fileName, ymlConfig);
         }
     }
