@@ -9,6 +9,7 @@ import me.faln.playerattributes.attributes.types.DefenseAttribute;
 import me.faln.playerattributes.attributes.types.ResistanceAttribute;
 import me.faln.playerattributes.events.UserLevelEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
@@ -125,6 +126,10 @@ public class User {
 
     public boolean isMaxLevel() {
         return this.level.getId() + 1 > this.plugin.getLevelCache().getMax();
+    }
+
+    public Player toPlayer() {
+        return Bukkit.getPlayer(id);
     }
 
     @Override

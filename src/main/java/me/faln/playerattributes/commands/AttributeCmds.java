@@ -6,14 +6,15 @@ import me.faln.playerattributes.PlayerAttributes;
 import me.faln.playerattributes.attributes.AttributeType;
 import me.faln.playerattributes.cache.LevelCache;
 import me.faln.playerattributes.cache.UserCache;
-import me.faln.playerattributes.utils.Utils;
+import me.faln.playerattributes.config.Lang;
+import me.faln.playerattributes.menus.types.LevelsMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
 
-@CommandAlias("attribute|att")
+@CommandAlias("attribute|attributes|att|stats")
 public class AttributeCmds extends BaseCommand {
 
     private final PlayerAttributes plugin;
@@ -28,38 +29,41 @@ public class AttributeCmds extends BaseCommand {
 
     @Default
     public void openMenu(final Player player) {
-        this.plugin.getMenuCache().get("levels").getImpl().buildFor(player);
+        LevelsMenu menu = (LevelsMenu) this.plugin.getMenuCache().get("levels").getImpl().buildFor(player);
+        menu.show(player);
     }
 
     @Subcommand("add")
     @CommandPermission("attribute.add")
     @Syntax("<type> <amount> <player>")
     @CommandCompletion("damage|defense|resistance|exp 1|2|3|4|5 @players")
-    public void add(final CommandSender sender, final String type, final Player player, double amount) {
+    public void add(final String type, final Player player, double amount) {
 
         switch (type.toLowerCase()) {
             case "damage":
                 this.userCache.get(player).increment(AttributeType.DAMAGE, BigDecimal.valueOf(amount));
+                Lang.INCREASE_ATTRIBUTE.getList().stream().map(s -> s.replace("%type%", type)).forEach(player::sendMessage);
                 break;
             case "defense":
                 this.userCache.get(player).increment(AttributeType.DEFENSE, BigDecimal.valueOf(amount));
+                Lang.INCREASE_ATTRIBUTE.getList().stream().map(s -> s.replace("%type%", type)).forEach(player::sendMessage);
                 break;
             case "resistance":
                 this.userCache.get(player).increment(AttributeType.RESISTANCE, BigDecimal.valueOf(amount));
+                Lang.INCREASE_ATTRIBUTE.getList().stream().map(s -> s.replace("%type%", type)).forEach(player::sendMessage);
                 break;
             case "exp":
                 this.userCache.get(player).addExp(BigDecimal.valueOf(amount));
+                Lang.INCREASE_EXP.getList().stream().map(s -> s.replace("%amount%", type)).forEach(player::sendMessage);
                 break;
         }
-
-        plugin.getUserCache().get(player).increment(AttributeType.DAMAGE, BigDecimal.valueOf(amount));
-        sender.sendMessage(Utils.colorize("&a&l[!] &aYou have added " + amount + " damage attributes to " + player.getName() + "."));
     }
 
     @Subcommand("save")
+    @CommandPermission("attribute.save")
     public void save(final CommandSender sender) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getUserCache().save());
-        sender.sendMessage(Utils.colorize("&aSaving Data"));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> this.plugin.getUserCache().save());
+        Lang.SAVE.send(sender);
     }
 
 

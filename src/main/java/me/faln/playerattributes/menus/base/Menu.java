@@ -1,46 +1,34 @@
 package me.faln.playerattributes.menus.base;
 
-import de.themoep.inventorygui.GuiElement;
-import de.themoep.inventorygui.InventoryGui;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
+import com.github.stefvanschie.inventoryframework.pane.OutlinePane;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collection;
 
 public interface Menu {
 
-    SimpleMenu getImpl();
+    Inventory getInventory();
 
-    InventoryGui getMenu();
+    MenuImpl getImpl();
 
-    @Nullable default Player getHolder() {
-        return (Player) this.getMenu().getOwner();
-    }
-
-    @Nonnull default String getTitle() {
-        return this.getMenu().getTitle();
-    }
-
-    @Nonnull default Collection<GuiElement> getElements() {
-        return this.getMenu().getElements();
-    }
-
-    default void setTitle(final String title) {
-        this.getMenu().setTitle(title);
-    }
-
-    default void setHolder(final Player player) {
-        this.getMenu().setOwner(player);
-    }
-
-    default void setFiller(final ItemStack itemStack) {
-        this.getMenu().setFiller(itemStack);
-    }
+    ChestGui getMenu();
 
     default void show(final Player player) {
         this.getMenu().show(player);
+    }
+
+    default void setBackground(final Material material) {
+        final OutlinePane outlinePane = new OutlinePane(0, 0, 9, 6);
+        outlinePane.addItem(new GuiItem(new ItemStack(material)));
+        outlinePane.setRepeat(true);
+        this.getMenu().addPane(outlinePane);
+    }
+
+    default void setClickable(final boolean value) {
+        this.getMenu().setOnGlobalClick(event -> event.setCancelled(value));
     }
 
 }

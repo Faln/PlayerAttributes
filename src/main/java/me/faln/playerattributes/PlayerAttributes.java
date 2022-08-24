@@ -1,11 +1,11 @@
 package me.faln.playerattributes;
 
 import co.aikar.commands.BukkitCommandManager;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import lombok.Getter;
 import me.faln.playerattributes.cache.LevelCache;
 import me.faln.playerattributes.cache.MenuCache;
 import me.faln.playerattributes.cache.UserCache;
-import me.faln.playerattributes.commands.AddCmds;
 import me.faln.playerattributes.commands.AttributeCmds;
 import me.faln.playerattributes.config.files.registry.FilesRegistry;
 import me.faln.playerattributes.hooks.PlaceholderAPIHook;
@@ -35,7 +35,6 @@ public final class PlayerAttributes extends JavaPlugin {
         this.levelCache = new LevelCache(this);
         this.menuCache = new MenuCache(this);
         this.commandManager = new BukkitCommandManager(this);
-        this.commandManager.registerCommand(new AddCmds(this));
         this.commandManager.registerCommand(new AttributeCmds(this));
 
         if (this.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {

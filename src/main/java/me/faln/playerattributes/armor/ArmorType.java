@@ -2,19 +2,26 @@ package me.faln.playerattributes.armor;
 
 public enum ArmorType {
 
-    LEATHER(2.5),
-    IRON(5.0),
-    GOLD(5.5),
-    DIAMOND(7.0),
-    NETHERITE(9.0);
+    LEATHER("leather",2.5),
+    IRON("iron",5.0),
+    GOLD("gold",5.5),
+    DIAMOND("diamond",7.0),
+    NETHERITE("netherite",9.0);
 
+    private final String material;
     private final double percentNegation;
 
-    ArmorType(final double percentNegation) {
+    ArmorType(final String material, final double percentNegation) {
         this.percentNegation = percentNegation;
+        this.material = material;
     }
 
     public double getNegation() {
         return this.percentNegation;
     }
+
+    public String getMaterial() {
+        return this.material;
+    }
+
 }

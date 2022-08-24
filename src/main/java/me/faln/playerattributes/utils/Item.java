@@ -9,15 +9,19 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Item {
 
     private final ItemStack stack;
     private final ItemMeta meta;
+    private ConfigurationSection section;
 
     public Item(@Nullable ItemStack stack) {
         this.stack = stack != null ? stack : new ItemStack(Material.AIR);
@@ -30,11 +34,13 @@ public class Item {
 
     public Item(ConfigurationSection section) {
         this(section.contains("material") ? Material.getMaterial(section.getString("material")) : Material.STONE);
+        this.section = section;
         if (stack.getType().equals(Material.PLAYER_HEAD) || stack.getType().equals(Material.PLAYER_WALL_HEAD)) {
-            if (section.contains("texture"))
+            if (section.contains("texture")) {
                 ofName(section.getString("name"));
-            else if (section.contains("owner"))
+            } else if (section.contains("owner")) {
                 ofPlayer(Bukkit.getOfflinePlayer(UUID.fromString(section.getString("owner"))));
+            }
         }
         setData(section.getInt("data", 0));
         if (section.contains("name"))
@@ -120,5 +126,11 @@ public class Item {
     public ItemStack build() {
         stack.setItemMeta(meta);
         return stack;
+    }
+
+    public Item replace(final @Nonnull String lookFor, final @NotNull String replaceWith) {
+        setName(section.getString("name").replace(lookFor, replaceWith));
+        setLore(section.getStringList("lore").stream().map(s -> s.replace(lookFor, replaceWith)).collect(Collectors.toList()));
+        return this;
     }
 }

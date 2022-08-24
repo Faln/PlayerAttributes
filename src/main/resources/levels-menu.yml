@@ -1,14 +1,25 @@
 title: '&7Levels'
-layout:
-  - '    a    '
-  - 'xx xxx xx'
-  - ' x x x x '
-  - ' x x x x '
-  - ' xxx xxx '
-  - '         '
-filler:
-  material: BLACK_STAINED_GLASS_PANE
+rows: 6
+filler: BLACK_STAINED_GLASS_PANE
 items:
+  next-page:
+    name: '&a&lNext Page'
+    material: LIME_STAINED_GLASS_PANE
+  previous-page:
+    name: '&c&lPrevious Page'
+    material: RED_STAINED_GLASS_PANE
+  player-info:
+    name: '&a&lYour Info: &7[%player%]'
+    material: BOOK
+    lore:
+      - ''
+      - '&a&lStats'
+      - ' &7* &fLevel: &a%player-level%'
+      - ' &7* &fCurrent Exp: &a%current-exp%&7/&a%required-exp%'
+      - ' &7* &fDamage: &a%player-damage%'
+      - ' &7* &fDefense: &a%player-defense%'
+      - ' &7* &fResistance: &a%player-resistance%'
+      - ''
   unlocked-levels:
     name: '&a&lLevel &8&l[&e&l%level%&8&l]'
     material: GREEN_STAINED_GLASS_PANE

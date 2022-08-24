@@ -48,6 +48,10 @@
                                     <pattern>co.aikar.locales</pattern>
                                     <shadedPattern>me.faln.playerattributes.locales</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>com.github.stefvanschie.inventoryframework</pattern>
+                                    <shadedPattern>me.faln.playerattributes.inventoryframework</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
@@ -79,10 +83,6 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
-        <repository>
-            <id>minebench-repo</id>
-            <url>https://repo.minebench.de/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -110,10 +110,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.themoep</groupId>
-            <artifactId>inventorygui</artifactId>
-            <version>1.5-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.github.stefvanschie.inventoryframework</groupId>
+            <artifactId>IF</artifactId>
+            <version>0.10.7</version>
         </dependency>
     </dependencies>
 </project>

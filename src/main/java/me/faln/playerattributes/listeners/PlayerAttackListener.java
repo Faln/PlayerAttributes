@@ -1,6 +1,7 @@
 package me.faln.playerattributes.listeners;
 
 import me.faln.playerattributes.PlayerAttributes;
+import me.faln.playerattributes.armor.ArmorProcessor;
 import me.faln.playerattributes.utils.Utils;
 import me.faln.playerattributes.attributes.AttributeType;
 import me.faln.playerattributes.objects.user.User;
@@ -25,6 +26,7 @@ public class PlayerAttackListener implements Listener {
 
     @EventHandler
     public void onAttack(final EntityDamageByEntityEvent event) {
+        //TODO: CLEAN THIS
         if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -34,14 +36,16 @@ public class PlayerAttackListener implements Listener {
         final User user = this.plugin.getUserCache().get(player.getUniqueId());
         final User victim;
 
-        final BigDecimal damage;
+        BigDecimal damage;
 
-        if (event.getEntity() instanceof Player) {
+        if (entity instanceof Player) {
             victim = this.plugin.getUserCache().get((Player) event.getEntity());
             damage = user.get(AttributeType.DAMAGE).multiply(BigDecimal.valueOf(100).divide(victim.get(AttributeType.DEFENSE).add(BigDecimal.valueOf(100)), RoundingMode.UNNECESSARY));
+            damage = ArmorProcessor.process(victim.toPlayer(), damage);
         } else {
             damage = user.get(AttributeType.DAMAGE);
         }
+
 
         final String entityHealth = entity.getHealth() - damage.longValueExact() <= 0 ? "0" : Utils.decimalFormat(entity.getHealth() - damage.longValueExact());
 
