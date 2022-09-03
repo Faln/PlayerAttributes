@@ -14,21 +14,21 @@ public interface Menu {
 
     MenuImpl getImpl();
 
-    ChestGui getMenu();
+    ChestGui getChestMenu();
 
     default void show(final Player player) {
-        this.getMenu().show(player);
+        this.getChestMenu().show(player);
     }
 
     default void setBackground(final Material material) {
         final OutlinePane outlinePane = new OutlinePane(0, 0, 9, 6);
         outlinePane.addItem(new GuiItem(new ItemStack(material)));
         outlinePane.setRepeat(true);
-        this.getMenu().addPane(outlinePane);
+        this.getChestMenu().addPane(outlinePane);
     }
 
     default void setClickable(final boolean value) {
-        this.getMenu().setOnGlobalClick(event -> event.setCancelled(value));
+        this.getChestMenu().setOnGlobalClick(event -> event.setCancelled(value));
     }
 
 }

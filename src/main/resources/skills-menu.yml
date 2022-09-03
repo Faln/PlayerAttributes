@@ -1,0 +1,41 @@
+title: '&7Skill Points'
+rows: 3
+filler: BLACK_STAINED_GLASS_PANE
+items:
+  player-info:
+    name: '&a&lYour Info: &7[%player%]'
+    material: BOOK
+    lore:
+      - ''
+      - '&a&lUnused Skill Points'
+      - ' &7* &fYou currently have %points% points available.'
+      - ''
+      - '&a&lStats'
+      - ' &7* &fDamage: &a%player-damage%'
+      - ' &7* &fDefense: &a%player-defense%'
+      - ' &7* &fResistance: &a%player-resistance%'
+      - ''
+  damage:
+    name: '&a&lDamage Attribute'
+    material: STONE_SWORD
+    lore:
+      - '&7Your damage attribute will define'
+      - '&7how much damage you will &fdeal&7.'
+      - ''
+      - '&aLeft-click to redeem +1 Damage.'
+  defense:
+    name: '&c&lDefense Attribute'
+    material: SHIELD
+    lore:
+      - '&7Your defense attribute will define'
+      - '&7how much damage you will &ftake&7.'
+      - ''
+      - '&cLeft-click to redeem +1 Defense.'
+  resistance:
+    name: '&c&lResistance Attribute'
+    material: IRON_INGOT
+    lore:
+      - '&7Your resistance attribute will define'
+      - '&7how much damage you will &ftake from poison&7.'
+      - ''
+      - '&cLeft-click to redeem +1 Resistance.'

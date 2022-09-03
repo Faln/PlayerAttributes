@@ -21,7 +21,7 @@ public abstract class MenuImpl implements Menu {
         this.file = file;
 
         final ConfigurationSection section = this.getFile().section("");
-        this.menu = new ChestGui(section.getInt("rows"), Utils.colorize(section.getString("title", "&7Levels")));
+        this.menu = new ChestGui(section.getInt("rows"), Utils.colorize(section.getString("title", "&7Menu")));
 
         if (section.contains("filler")) {
             this.setBackground(Material.getMaterial(section.getString("filler", "AIR")));
@@ -29,5 +29,10 @@ public abstract class MenuImpl implements Menu {
     }
 
     public abstract MenuImpl buildFor(final Player player);
+
+    @Override
+    public ChestGui getChestMenu() {
+        return this.menu;
+    }
 
 }

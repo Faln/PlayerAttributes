@@ -15,11 +15,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
 
-public class PlayerAttackListener implements Listener {
+public class AttackListener implements Listener {
 
     private final PlayerAttributes plugin;
 
-    public PlayerAttackListener(final PlayerAttributes plugin) {
+    public AttackListener(final PlayerAttributes plugin) {
         this.plugin = plugin;
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

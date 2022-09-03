@@ -1,7 +1,6 @@
 package me.faln.playerattributes;
 
 import co.aikar.commands.BukkitCommandManager;
-import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import lombok.Getter;
 import me.faln.playerattributes.cache.LevelCache;
 import me.faln.playerattributes.cache.MenuCache;
@@ -10,7 +9,7 @@ import me.faln.playerattributes.commands.AttributeCmds;
 import me.faln.playerattributes.config.files.registry.FilesRegistry;
 import me.faln.playerattributes.hooks.PlaceholderAPIHook;
 import me.faln.playerattributes.listeners.JoinListener;
-import me.faln.playerattributes.listeners.PlayerAttackListener;
+import me.faln.playerattributes.listeners.AttackListener;
 import me.faln.playerattributes.utils.Utils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,7 +41,7 @@ public final class PlayerAttributes extends JavaPlugin {
         }
 
         new JoinListener(this);
-        new PlayerAttackListener(this);
+        new AttackListener(this);
     }
 
     @Override

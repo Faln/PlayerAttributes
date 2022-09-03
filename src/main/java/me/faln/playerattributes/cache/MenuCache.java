@@ -4,6 +4,7 @@ import lombok.Getter;
 import me.faln.playerattributes.PlayerAttributes;
 import me.faln.playerattributes.menus.base.Menu;
 import me.faln.playerattributes.menus.types.LevelsMenu;
+import me.faln.playerattributes.menus.types.SkillsMenu;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class MenuCache {
     private void cache() {
         this.menus.clear();
         this.add("levels", new LevelsMenu(plugin));
+        this.add("skills", new SkillsMenu(plugin));
     }
 
     public void add(final String name, final Menu menu) {

@@ -7,7 +7,6 @@ import me.faln.playerattributes.attributes.AttributeType;
 import me.faln.playerattributes.attributes.types.DamageAttribute;
 import me.faln.playerattributes.attributes.types.DefenseAttribute;
 import me.faln.playerattributes.attributes.types.ResistanceAttribute;
-import me.faln.playerattributes.events.UserLevelEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -59,7 +58,6 @@ public class User {
 
             this.setCurrentExp(extra == 0.0 ? BigDecimal.ZERO : BigDecimal.valueOf(extra));
             this.level = this.plugin.getLevelCache().get(this.level.getId() + 1);
-
         }
 
         this.currentExp = this.currentExp.add(amount);

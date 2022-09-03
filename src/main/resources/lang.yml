@@ -1,0 +1,7 @@
+help:
+  - '&8-----------&8(&a&lAttributes&8)-----------'
+  - '&2/attribute menu &7- &aOpens your attribute menu'
+  - '&8---------------------------'
+save: '&aSaving attribute data'
+attribute-increase: '&a&l+%amount% %type%'
+experience-increase: '&a&l+ %amount% Experience'

@@ -1,7 +1,6 @@
 package me.faln.playerattributes.menus.types;
 
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
-import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import me.faln.playerattributes.PlayerAttributes;
@@ -49,8 +48,22 @@ public class LevelsMenu extends MenuImpl {
 
         final StaticPane extras = new StaticPane(0, 5, 9, 1);
 
-        extras.addItem(new GuiItem(new Item(this.getFile().section("items.next-page")).build()), 5, 0);
-        extras.addItem(new GuiItem(new Item(this.getFile().section("items.previous-page")).build()), 3, 0);
+        extras.addItem(new GuiItem(new Item(this.getFile().section("items.next-page")).build(), event -> {
+            if (pages.getPage() < pages.getPages() - 1) {
+                pages.setPage(pages.getPage() + 1);
+
+                this.getMenu().update();
+            }
+        }), 5, 0);
+
+        extras.addItem(new GuiItem(new Item(this.getFile().section("items.previous-page")).build(), event -> {
+            if (pages.getPage() > 0) {
+                pages.setPage(pages.getPage() - 1);
+
+                this.getMenu().update();
+            }
+        }), 3, 0);
+
         extras.addItem(new GuiItem(new Item(this.getFile().section("items.player-info"))
                 .ofUUID(player.getUniqueId())
                 .replace("%player%", player.getName())
@@ -65,15 +78,9 @@ public class LevelsMenu extends MenuImpl {
         return this;
     }
 
-
     @Override
     public void show(final Player player) {
         this.getMenu().show(player);
-    }
-
-    @Override
-    public ChestGui getMenu() {
-        return this.getMenu();
     }
 
     @Override

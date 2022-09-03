@@ -8,6 +8,7 @@ import java.util.List;
 
 public enum Lang {
 
+    HELP("help"),
     SAVE("save"),
     INCREASE_ATTRIBUTE("attribute-increase"),
     INCREASE_EXP("experience-increase");
